@@ -1,6 +1,6 @@
 # shopping_app
 
-A new Flutter project.
+A shopping app to list, favorite and buy products. Part of an online Flutter course.
 
 ## Getting Started
 
