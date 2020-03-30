@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shopping_app/providers/cart.dart';
+import 'package:shopping_app/providers/products_provider.dart';
 import 'package:shopping_app/screens/cart_screen.dart';
 import 'package:shopping_app/widgets/app_drawer.dart';
 import 'package:shopping_app/widgets/badge.dart';
@@ -18,6 +19,32 @@ class ProductsOveriewScreen extends StatefulWidget {
 
 class _ProductsOveriewScreenState extends State<ProductsOveriewScreen> {
   var _showOnlyFavorites = false;
+  var _isInit = true;
+  var _isLoading = false;
+
+  @override
+  void initState() {
+    // Provider.of<ProductsProvider>(context).fetchAndSetProducts(); // Will only work with listen:false
+    // Future.delayed(Duration.zero).then((_) {
+    //   Provider.of<ProductsProvider>(context).fetchAndSetProducts();  // Another way to do it
+    // });
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    if (_isInit == true) {
+      setState(() {
+        _isLoading = true;
+      });
+      Provider.of<ProductsProvider>(context).fetchAndSetProducts().then((_) {
+        _isLoading = false;
+      });
+    }
+    _isInit = false;
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,7 +88,11 @@ class _ProductsOveriewScreenState extends State<ProductsOveriewScreen> {
         ],
       ),
       drawer: AppDrawer(),
-      body: ProductsGrid(_showOnlyFavorites),
+      body: _isLoading
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : ProductsGrid(_showOnlyFavorites),
     );
   }
 }
