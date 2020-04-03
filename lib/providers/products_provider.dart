@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:shopping_app/models/http_excetpion.dart';
+import 'package:shopping_app/models/http_exception.dart';
 import 'package:shopping_app/providers/product.dart';
 import 'package:http/http.dart' as http;
 
