@@ -30,6 +30,7 @@ class MyApp extends StatelessWidget {
           // in order to avoid the is required you can rollback to provider 3.0.0 and use builder instead of update
           update: (ctx, auth, previousProductsProvider) => ProductsProvider(
               auth.token,
+              auth.userId,
               previousProductsProvider == null
                   ? []
                   : previousProductsProvider.items),
